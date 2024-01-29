@@ -1,0 +1,14 @@
+.category-cards-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    width: 85px;
+    height: 100px;
+    background-color: #fae8a7;
+    border: 2px solid #F29F00;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+}
