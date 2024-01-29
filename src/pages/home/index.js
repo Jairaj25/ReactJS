@@ -1,6 +1,6 @@
-import homeImage from "../assets/reactFoodImage.png";
+import homeImage from "../../assets/reactFoodImage.png";
 import { Link } from 'react-router-dom';
-import "../styles/homepage.css";
+import "./index.css";
 export const HomePage = () => {
     return (
         <div className="home-main-container">

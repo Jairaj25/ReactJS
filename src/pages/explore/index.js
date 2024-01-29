@@ -1,9 +1,9 @@
-import "../styles/explorepage.css";
-import LocationPinSvg from "../components/common/locationicon";
-import { foodCategories } from "../sample_data/foodcategories";
-import { foods } from "../sample_data/foods";
-import { FoodCategoryCards } from "../components/common/foodcategorycards";
-import { FoodListCards } from "../components/common/foodlistcards";
+import "./index.css";
+import LocationPinSvg from "../../components/common/SVGs/locationicon";
+import { foodCategories } from "../../sample-data/foodcategories";
+import { foods } from "../../sample-data/foods";
+import { FoodCategoryCards } from "../../components/food-category-cards/index";
+import { FoodListCards } from "../../components/food-list-cards/index";
 
 export const ExplorePage = () => {
     return (

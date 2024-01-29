@@ -1,5 +1,5 @@
 import React from 'react';
-import "../../styles/locationiconcomponent.css"
+import "./index.css";
 
 const LocationPinSvg = () => {
   return (

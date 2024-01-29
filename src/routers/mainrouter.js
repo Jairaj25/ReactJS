@@ -1,12 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { HomePage } from '../../pages/homepage';
-import { ExplorePage } from '../../pages/explorepage';
-import { NavbarComponent } from './navbar';
-import { AboutPage } from '../../pages/aboutpage';
-import { AccountPage } from '../../pages/accountpage';
-import { CartPage } from '../../pages/cartpage';
-import { PrivacyPage } from '../../pages/privacypage';
+import { HomePage } from '../pages/home/index.js';
+import { ExplorePage } from '../pages/explore/index.js';
+import { NavbarComponent } from '../components/common/navbar/index.js';
+import { AboutPage } from '../pages/about/index.js';
+import { AccountPage } from '../pages/account/index.js';
+import { PrivacyPage } from '../pages/privacy/index.js';
 
 export default function MainRouter() {
   return (
@@ -17,7 +16,6 @@ export default function MainRouter() {
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/account" element={<AccountPage />} />
-        <Route path="/cart" element={<CartPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
       </Routes>
     </Router>

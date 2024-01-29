@@ -13,7 +13,7 @@
     align-items: center;
     padding: 0 0 0 75px;
     color: #1C2344;
-    background: url("../assets/banner-image.jpg") no-repeat;
+    background: url("../../assets/banner-image.jpg") no-repeat;
     background-size: cover;
 }
 
@@ -30,6 +30,10 @@
 
 .explore-banner-find-address-input, .explore-banner-find-address-button{
     height: 40px;
+}
+
+.explore-banner-find-address-button{
+    cursor: pointer;
 }
 
 .explore-banner-find-address-input{
@@ -68,7 +72,7 @@ input.explore-banner-find-address-input
 .explore-banner-order-text-logo{
     width: 100px;
     height: 40px;
-    background: url("../assets/icon-logo.png") no-repeat;
+    background: url("../../assets/icon-logo.png") no-repeat;
     background-size: contain;
 
 }
@@ -83,5 +87,5 @@ input.explore-banner-find-address-input
 .explore-food-list-wrapper{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    column-gap: 40px;
+    gap: 40px;
 }

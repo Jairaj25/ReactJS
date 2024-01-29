@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import websiteLogo from "../../assets/website-logo.jpeg";
-import searchIcon from "../../assets/search-icon.svg";
-import cartIcon from "../../assets/shopping-cart-icon.svg";
-import usersIcon from "../../assets/users-icon.svg";
+import websiteLogo from "../../../assets/website-logo.jpeg";
+import searchIcon from "../../../assets/search-icon.svg";
+import cartIcon from "../../../assets/shopping-cart-icon.svg";
+import usersIcon from "../../../assets/users-icon.svg";
 import { Link, useLocation } from 'react-router-dom';
-import "../../styles/navbar.css";
+import "./index.css";
 
 export const NavbarComponent = () => {
 
