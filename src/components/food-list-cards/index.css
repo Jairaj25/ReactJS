@@ -20,10 +20,12 @@
 
 .food-list-name {
     margin: 0 0 5px 0;
+    width: fit-content;
 }
 
 .food-list-price{
     display: flex;
+    width: fit-content;
 }
 
 .food-list-price-additional-text{

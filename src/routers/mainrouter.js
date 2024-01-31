@@ -6,6 +6,7 @@ import { NavbarComponent } from '../components/common/navbar/index.js';
 import { AboutPage } from '../pages/about/index.js';
 import { AccountPage } from '../pages/account/index.js';
 import { PrivacyPage } from '../pages/privacy/index.js';
+import { FoodDetailPage } from "../pages/food-detail/index.js";
 
 export default function MainRouter() {
   return (
@@ -17,6 +18,7 @@ export default function MainRouter() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/account" element={<AccountPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/food/:category/:foodName" element={<FoodDetailPage />} />
       </Routes>
     </Router>
   );
