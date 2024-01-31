@@ -125,12 +125,14 @@ nav div.active::after {
     z-index: 5;
     border-radius: 20px 0 0 20px;
     height: 1025px;
+    pointer-events: none;
 }
 
 #root {
     transition: transform 0.5s linear;
     transform-origin: right center;
     animation: changeHeight 0.5s forwards;
+    z-index: 5;
 }
 
   @keyframes changeHeight {
