@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
 .explore-main-container {
-    padding: 50px 70px;
+    padding: 50px 0;
 }
 
 .explore-main-banner {
-    margin: 0 0 0 0;
+    margin: 0 70px;
     font-family: "rubik";
     height: 450px;
     border-radius: 50px;
@@ -21,6 +21,7 @@
     font-size: 36px;
     font-weight: 600;
     display: flex;
+    align-items: center;
     gap: 15px;
 }
 
@@ -31,10 +32,6 @@
 .explore-banner-find-address-input,
 .explore-banner-find-address-button {
     height: 40px;
-}
-
-.explore-banner-find-address-button {
-    cursor: pointer;
 }
 
 .explore-banner-find-address-input {
@@ -61,6 +58,7 @@ input.explore-banner-find-address-input {
     background-color: #F29F00;
     width: 75px;
     border-radius: 0 10px 10px 0;
+    cursor: pointer;
 }
 
 .explore-banner-content {
@@ -74,7 +72,6 @@ input.explore-banner-find-address-input {
     height: 40px;
     background: url("../../assets/icon-logo.png") no-repeat;
     background-size: contain;
-
 }
 
 .explore-food-category-wrapper {
@@ -82,16 +79,93 @@ input.explore-banner-find-address-input {
     display: flex;
     gap: 20px;
     overflow: auto;
+    padding: 0 70px;
+}
+
+.explore-food-category-wrapper::-webkit-scrollbar {
+    width: 0.5px;
+}
+
+.explore-food-category-wrapper::-webkit-scrollbar-thumb {
+    background-color: transparent;
 }
 
 .explore-food-list-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 40px;
+    padding: 70px;
+}
+
+@media screen and (min-width: 769px) and (max-width: 880px) {
+
+    .explore-food-list-wrapper {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 30px;
+    }
+
+    .explore-main-banner {
+        padding: 0 0 0 50px;
+        background-position: 20%;
+        background-size: cover;
+    }
+
 }
 
 @media (max-width: 768px) {
     .explore-main-container {
         background-color: #FFFFFF;
+        padding: 20px 0;
+    }
+
+    .explore-main-banner {
+        padding: 0;
+        margin: 0 20px;
+        background-position: 20%;
+        background-size: cover;
+        justify-content: center;
+    }
+
+    .explore-banner-content {
+        gap: 15px;
+    }
+
+    .explore-food-category-wrapper {
+        padding: 0 20px;
+        margin: 25px 0;
+    }
+
+    .explore-food-list-wrapper {
+        padding: 0 20px;
+    }
+    input.explore-banner-find-address-input {
+        font-size: 14px;
+    }
+
+    .explore-banner-order-text-container {
+        font-size: 28px;
+    }
+
+    .explore-food-list-wrapper {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 20px;
+    }
+
+}
+
+@media (max-width: 370px) {
+    .explore-main-banner {
+        padding: 0 ;
+        justify-content: center;
+    }
+
+    .explore-banner-find-address-input {
+        width: 180px;
+    }
+
+    .explore-banner-order-text-logo {
+        width: 75px;
+        height: 30px;
     }
 }

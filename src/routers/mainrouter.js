@@ -7,6 +7,7 @@ import { AboutPage } from '../pages/about/index.js';
 import { AccountPage } from '../pages/account/index.js';
 import { PrivacyPage } from '../pages/privacy/index.js';
 import { FoodDetailPage } from "../pages/food-detail/index.js";
+import { AuthForm } from "../pages/authform/index.js";
 
 export default function MainRouter() {
   return (
@@ -14,6 +15,8 @@ export default function MainRouter() {
         <NavbarComponent />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<AuthForm />} />
+        <Route path="/signup" element={<AuthForm />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/account" element={<AccountPage />} />

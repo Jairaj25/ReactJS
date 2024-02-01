@@ -43,3 +43,19 @@
     margin: 0 10px;
 }
 
+
+@media (max-width: 768px) {
+    .food-list-grid-wrapper {
+        font-size: 14px;
+    }
+
+    .food-list-price-additional-text{
+        font-size: 12px;
+    }
+
+    .food-list-price-additional-text span{
+        width: 3px;
+        height: 3px;
+        margin: 0 5px;
+    }
+}

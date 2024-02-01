@@ -136,11 +136,14 @@ nav div.active::after {
 }
 
   @keyframes changeHeight {
-    from{
+    0% {
         height: auto;
     }
-    to {
-      height: 1025px;
+    99% {
+        height: 1025px;
+    }
+    100% {
+        height: auto;
     }
   }
 

@@ -4,11 +4,21 @@
     gap: 15px;
     align-items: center;
     justify-content: center;
-    width: 85px;
+    min-width: 85px;
     height: 100px;
     background-color: #fae8a7;
     border: 2px solid #F29F00;
     border-radius: 20px;
     font-size: 12px;
     cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+
+    .category-cards-wrapper {
+        min-width: 70px;
+        height: 70px;
+    }
+
 }
