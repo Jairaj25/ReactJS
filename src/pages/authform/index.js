@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './index.css';
 
 const LoginForm = ({ onLogin }) => {
@@ -29,24 +29,38 @@ const LoginForm = ({ onLogin }) => {
   return (
     <div className="login-main-container">
       <div className="login-form-container">
-        <h2>Login Form</h2>
-        <label>Email:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        {emailError && <div className="error-message">{emailError}</div>}
-
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {passwordError && <div className="error-message">{passwordError}</div>}
-
-        <button onClick={handleLogin}>Login</button>
+        <div className="login-title-container">
+          <h2>Login</h2>
+        </div>
+        <div className="login-email-input-container">
+          <label style={{ color: emailError ? '#C94A4A' : 'inherit' }}>Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder='JohnDoe@Example.com'
+          />
+          {emailError && <div className="login-error-message">{emailError}</div>}
+        </div>
+        <div className="login-password-input-container">
+          <label>Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder='********'
+          />
+          {passwordError && <div className="login-error-message">{passwordError}</div>}
+        </div>
+        <div className="login-submit-button-container">
+          <div className="login-submit-button-wrapper">
+            <div onClick={handleLogin}>Login</div>
+          </div>
+        </div>
+        <div className="login-switchform-container">
+          <p>Already have an account? </p>
+          <Link className="login-link-text" to="/signup">Log in here.</Link>
+        </div>
       </div>
     </div>
   );
@@ -88,37 +102,37 @@ const SignupForm = ({ onSignup }) => {
     <div className="login-main-container">
       <div className="login-form-container">
         <h2>Sign Up Form</h2>
-        <label>Email:</label>
+        <label>Email</label>
         <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      {emailError && <div className="error-message">{emailError}</div>}
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        {emailError && <div className="error-message">{emailError}</div>}
 
-      <label>Password:</label>
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      {passwordError && <div className="error-message">{passwordError}</div>}
+        <label>Password:</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {passwordError && <div className="error-message">{passwordError}</div>}
 
-      <label>Name:</label>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      {nameError && <div className="error-message">{nameError}</div>}
+        <label>Name</label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        {nameError && <div className="error-message">{nameError}</div>}
 
-      <label>Phone Number:</label>
-      <input
-        type="tel"
-        value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
-      />
-      {phoneNumberError && <div className="error-message">{phoneNumberError}</div>}
+        <label>Phone Number</label>
+        <input
+          type="tel"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
+        {phoneNumberError && <div className="error-message">{phoneNumberError}</div>}
 
         <button onClick={handleSignup}>Sign Up</button>
       </div>
@@ -131,11 +145,11 @@ export const AuthForm = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   const handleSignup = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   return (location.pathname === '/login' ? <LoginForm onLogin={handleLogin} /> : <SignupForm onSignup={handleSignup} />);
