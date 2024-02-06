@@ -1,11 +1,25 @@
 import "./index.css";
 import LocationPinSvg from "../../components/common/SVGs/locationicon";
 import { foodCategories } from "../../sample-data/foodcategories";
-import { foods } from "../../sample-data/foods";
 import { FoodCategoryCards } from "../../components/food-category-cards/index";
 import { FoodListCards } from "../../components/food-list-cards/index";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../../redux/actions/product-actions';
+import { addToCart } from '../../redux/reducers/cartreducer';
 
-export const ExplorePage = () => {
+export const ExplorePage  = () => {
+    const dispatch = useDispatch();
+    const products = useSelector(state => state.products);
+
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch]);
+
+    const handleAddToCart = (item) => {
+        dispatch(addToCart(item));
+    };
+
     return (
         <div className="explore-main-container">
             <div className="explore-main-banner">
@@ -30,9 +44,12 @@ export const ExplorePage = () => {
                 ))}
             </div>
             <div className="explore-food-list-wrapper">
-
-                {foods.map((food, index) => (
-                    <FoodListCards key={index} {...food} />
+                {products.map(product => (
+                    <FoodListCards
+                        key={product.id}
+                        product={product}
+                        onAddToCart={handleAddToCart}
+                    />
                 ))}
             </div>
         </div>

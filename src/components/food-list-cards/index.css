@@ -43,6 +43,13 @@
     margin: 0 10px;
 }
 
+.food-list-add-to-cart-button{
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    left: 200px;
+    top: 130px;
+}
 
 @media (max-width: 768px) {
     .food-list-grid-wrapper {
