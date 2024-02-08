@@ -22,7 +22,7 @@ export default function MainRouter() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/account" element={<AccountPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
-        <Route path="/cart" element={<CartPage />} />
+        <Route path="/cart" element={<CartPage isPopUp={true}/>} />
         <Route path="/food/:category/:foodName" element={<FoodDetailPage />} />
       </Routes>
     </Router>

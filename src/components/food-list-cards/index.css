@@ -18,9 +18,32 @@
     overflow: hidden;
 }
 
-.food-list-name {
+.food-list-name-action-wrapper{
     margin: 0 0 5px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.food-list-name {
     width: fit-content;
+    height: fit-content;
+}
+
+.food-list-add-to-cart-button{
+    width: fit-content;
+    height: fit-content;
+    margin: 0 5px 0 0;
+}
+
+.quantity-buttons{
+    display: flex;
+    gap: 10px;
+}
+
+.quantity-buttons button{
+    width: 30px;
+    border: 1px solid #F29F00;
+    border-radius: 10px;
 }
 
 .food-list-price{
@@ -41,14 +64,6 @@
     background-color: #757575;
     border-radius: 50%;
     margin: 0 10px;
-}
-
-.food-list-add-to-cart-button{
-    position: relative;
-    width: fit-content;
-    height: fit-content;
-    left: 200px;
-    top: 130px;
 }
 
 @media (max-width: 768px) {

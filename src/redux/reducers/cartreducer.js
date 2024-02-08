@@ -14,11 +14,9 @@ const cartSlice = createSlice({
   initialState: loadCartFromStorage(),
   reducers: {
     addToCart: (state, action) => {
-      console.log('Reducer - addToCart', action.payload);
       const newItem = action.payload;
       const existingItemIndex = state.items.findIndex((item) => item.id === newItem.id);
 
-      console.log("reducer state", state);
       if (existingItemIndex !== -1) {
         state.items[existingItemIndex].quantity += newItem.quantity;
       } else {
@@ -30,8 +28,29 @@ const cartSlice = createSlice({
 
       saveCartToStorage(state);
     },
+    updateQuantity: (state, action) => {
+      const { itemId, increment } = action.payload;
+      const itemIndex = state.items.findIndex((item) => item.id === itemId);
+      if (itemIndex !== -1) {
+        if (increment === true) {
+          state.items[itemIndex].quantity += 1;
+        } else {
+          state.items[itemIndex].quantity -= 1;
+          if (state.items[itemIndex].quantity < 1) {
+            state.items.splice(itemIndex, 1);
+          }
+        }
+      }
+      state.total = state.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      saveCartToStorage(state);
+    },
+    removeFromCart: (state, action) => {
+      const itemIdToRemove = action.payload;
+      state.items = state.items.filter(item => item.id !== itemIdToRemove);
+      state.total = state.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      saveCartToStorage(state);
+    },
     clearCart: (state) => {
-      console.log('Reducer - clearCart');
       state.items = [];
       state.total = 0;
       state.restaurant = '';
@@ -41,5 +60,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, clearCart } = cartSlice.actions;
+export const { addToCart, clearCart, removeFromCart, updateQuantity } = cartSlice.actions;
 export default cartSlice.reducer;
