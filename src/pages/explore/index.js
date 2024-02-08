@@ -7,10 +7,12 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../redux/actions/product-actions';
 import { addToCart } from '../../redux/reducers/cartreducer';
+import { fetchUsers } from '../../redux/actions/mock-api-action';
 
-export const ExplorePage  = () => {
+export const ExplorePage = () => {
     const dispatch = useDispatch();
     const products = useSelector(state => state.products);
+    const { loading, users, error } = useSelector((state) => state.mockApi);
 
     useEffect(() => {
         dispatch(fetchProducts());
@@ -19,6 +21,11 @@ export const ExplorePage  = () => {
     const handleAddToCart = (item) => {
         dispatch(addToCart(item));
     };
+
+    useEffect(() => {
+        dispatch(fetchUsers());
+    }, [dispatch]);
+
 
     return (
         <div className="explore-main-container">
@@ -51,6 +58,24 @@ export const ExplorePage  = () => {
                         onAddToCart={handleAddToCart}
                     />
                 ))}
+            </div>
+            <div className="explore-food-list-wrapper">
+                {loading ? (
+                    <p>Loading...</p>
+                ) : error ? (
+                    <p>Error: {error}</p>
+                ) : (
+                    <div>
+                        {users.map((user) => (
+                            <div key={user.id}>
+                                <h3>{user.name}</h3>
+                                <p>{user.description}</p>
+                                <img src={user.avatar} alt={user.name} />
+                                <p>Vehicle: {user.vehicle}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     )
