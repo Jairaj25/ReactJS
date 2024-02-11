@@ -1,4 +1,3 @@
-
 import { NavbarComponent } from "./Components/navbar"
 import './App.css';
 

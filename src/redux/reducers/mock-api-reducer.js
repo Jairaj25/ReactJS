@@ -1,4 +1,3 @@
-// src/redux/reducers/mockApiReducer.js
 import { FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE } from '../actions/mock-api-action';
 
 const initialState = {

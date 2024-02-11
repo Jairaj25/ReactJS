@@ -1,4 +1,3 @@
-// src/redux/actions/mockApiActions.js
 import axios from 'axios';
 
 export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
