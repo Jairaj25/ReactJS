@@ -110,7 +110,7 @@ export const MockApiOperationsPage = () => {
                                     <div className="user-list-image">
                                         <img src={user.avatar} alt={user.name} />
                                     </div>
-                                    <div className="user-list-text">
+                                    <div className="mock-user-list-text">
                                         <div className="user-list-info-wrapper">
                                             <div className="user-list-name-desc">
                                                 <div className="user-list-name">
@@ -164,11 +164,17 @@ export const MockApiOperationsPage = () => {
                 </div>
             </ReactModal>
 
-            <ReactModal className="edit-users-modal" isOpen={isDeleteModalOpen}>
-                <div className="edit-users-container">
+            <ReactModal className="delete-user-modal" isOpen={isDeleteModalOpen}>
+                <div className="delete-user-container">
                     <p>Are you sure you want to delete this user?</p>
-                    <button onClick={() => handleConfirmDelete()}>Yes</button>
-                    <button onClick={() => setIsDeleteModalOpen(false)}>No</button>
+                    <div className="delete-user-buttons">
+                        <div className="delete-user-submit-btn">
+                            <button onClick={() => handleConfirmDelete()}>Yes</button>
+                        </div>
+                        <div className="delete-user-submit-btn">
+                            <button onClick={() => setIsDeleteModalOpen(false)}>No</button>
+                        </div>
+                    </div>
                 </div>
             </ReactModal>
         </div>

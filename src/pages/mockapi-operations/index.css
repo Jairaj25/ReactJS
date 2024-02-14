@@ -22,7 +22,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.user-list-text{
+.mock-user-list-text{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -113,4 +113,47 @@
     height: 50px;
     background-color: #F29F00;
     border-radius: 30px;
+    color: #FFFFFF;
+}
+
+.delete-user-modal{
+    border-radius: 14px;
+    height: 240px;
+    width: 500px;
+    position: absolute;
+    left: 545px;
+    top: 245px;
+    border: 1px solid rgb(204, 204, 204);
+    background: rgb(255, 255, 255);
+    overflow: auto;
+    outline: none;
+    padding: 30px;
+}
+
+.delete-user-container{
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    align-items: center;
+    height: 100%;
+    color: #1C2344;
+}
+
+.delete-user-buttons{
+    display: flex;
+    gap: 50px;
+}
+
+.delete-user-submit-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-user-submit-btn button{
+    width: 115px;
+    height: 50px;
+    background-color: #F29F00;
+    border-radius: 30px;
+    color: #FFFFFF;
 }
