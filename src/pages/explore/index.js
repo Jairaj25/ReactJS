@@ -7,25 +7,32 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../redux/actions/product-actions';
 import { addToCart } from '../../redux/reducers/cartreducer';
-import { fetchUsers } from '../../redux/actions/mock-api-action';
+import { fetchUsers, updateCurrentPage } from '../../redux/actions/mock-api-action';
+import { Link } from 'react-router-dom';
 
 export const ExplorePage = () => {
     const dispatch = useDispatch();
     const products = useSelector(state => state.products);
-    const { loading, users, error } = useSelector((state) => state.mockApi);
+    const { loading, users, error, currentPage, usersPerPage } = useSelector((state) => state.mockApi);
 
     useEffect(() => {
         dispatch(fetchProducts());
+        dispatch(fetchUsers());
     }, [dispatch]);
 
     const handleAddToCart = (item) => {
         dispatch(addToCart(item));
     };
 
-    useEffect(() => {
-        dispatch(fetchUsers());
-    }, [dispatch]);
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
+    const paginate = (pageNumber) => {
+        if (pageNumber >= 1 && pageNumber <= Math.ceil(users.length / usersPerPage)) {
+            dispatch(updateCurrentPage(pageNumber));
+        }
+    };
 
     return (
         <div className="explore-main-container">
@@ -59,23 +66,48 @@ export const ExplorePage = () => {
                     />
                 ))}
             </div>
-            <div className="explore-food-list-wrapper">
+            <div className="explore-user-list-container">
+                <div>
+                    <h2>Mock Api Data</h2>
+                </div>
                 {loading ? (
                     <p>Loading...</p>
                 ) : error ? (
                     <p>Error: {error}</p>
                 ) : (
-                    <div>
-                        {users.map((user) => (
-                            <div key={user.id}>
-                                <h3>{user.name}</h3>
-                                <p>{user.description}</p>
-                                <img src={user.avatar} alt={user.name} />
-                                <p>Vehicle: {user.vehicle}</p>
-                            </div>
-                        ))}
-                    </div>
+                    <>
+                        <div className="explore-user-list-wrapper">
+                            {currentUsers.map((user) => (
+                                <div className="explore-user-list-cards" key={user.id}>
+                                    <div className="user-list-image">
+                                        <img src={user.avatar} alt={user.name} />
+                                    </div>
+                                    <div className="user-list-text">
+                                        <div className="user-list-name-desc">
+                                            <div className="user-list-name">
+                                                <p>{user.name}</p>
+                                            </div>
+                                            <div className="user-list-description">
+                                                <p>{user.description.length > 70 ? `${user.description.substring(0, 50)}...` : user.description}</p>
+                                            </div>
+                                        </div>
+                                        <div className="user-list-vehicle">
+                                            <p>{user.vehicle}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="explore-users-pagination-wrapper">
+                            <button onClick={() => paginate(currentPage - 1)}>&lt;&nbsp;&nbsp;Previous</button>
+                            <div>{currentPage}</div>
+                            <button onClick={() => paginate(currentPage + 1)}>Next&nbsp;&nbsp;&gt;</button>
+                        </div>
+                    </>
                 )}
+                <div>
+                    <h3><Link to="/about">Click to perform CRUD Operations</Link></h3>
+                </div>
             </div>
         </div>
     )

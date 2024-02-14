@@ -9,6 +9,7 @@ import { PrivacyPage } from '../pages/privacy/index.js';
 import { FoodDetailPage } from "../pages/food-detail/index.js";
 import { AuthForm } from "../pages/authform/index.js";
 import { CartPage } from "../pages/cart/index.js";
+import { MockApiOperationsPage } from "../pages/mockapi-operations/index.js";
 
 export default function MainRouter() {
   return (
@@ -24,6 +25,7 @@ export default function MainRouter() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/cart" element={<CartPage isPopUp={true}/>} />
         <Route path="/food/:category/:foodName" element={<FoodDetailPage />} />
+        <Route path="/users" element={<MockApiOperationsPage />} />
       </Routes>
     </Router>
   );
