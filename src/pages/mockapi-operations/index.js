@@ -2,15 +2,19 @@
 import React, { useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUser, createUser, updateUser, deleteUser, fetchUsers, updateCurrentPage } from '../../redux/actions/mock-api-action';
+import { fetchUsers, updateCurrentPage, fetchUser, createUser, updateUser, deleteUser } from '../../redux/actions/mock-api-action';
+import searchIcon from "../../assets/search-icon.svg";
 import "./index.css";
+import { UserCard } from '../../components/user-list-cards';
 
 export const MockApiOperationsPage = () => {
     const dispatch = useDispatch();
     const { loading, users, error, currentPage, usersPerPage } = useSelector((state) => state.mockApi);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const [selectedUser, setSelectedUser] = useState(null);
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState('');
+    const [searchedUserId, setSearchedUserId] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -28,25 +32,6 @@ export const MockApiOperationsPage = () => {
     const paginate = (pageNumber) => {
         if (pageNumber >= 1 && pageNumber <= Math.ceil(users.length / usersPerPage)) {
             dispatch(updateCurrentPage(pageNumber));
-        }
-    };
-
-    const getUser = async (userId) => {
-        try {
-            const response = await fetchUser(userId);
-            return response.data;
-        } catch (error) {
-            throw new Error(error.message);
-        }
-    };
-
-    // Create user
-    const addUser = async (userData) => {
-        try {
-            const response = await createUser(userData);
-            return response.data;
-        } catch (error) {
-            throw new Error(error.message);
         }
     };
 
@@ -87,13 +72,40 @@ export const MockApiOperationsPage = () => {
             description: '',
             vehicle: ''
         });
-        dispatch(fetchUsers());
         setIsEditModalOpen(false)
+    };
+
+    const handleInputChange = (event) => {
+        setSearchedUserId(event.target.value);
+    };
+
+    const handleSearchSubmit = (event) => {
+        event.preventDefault();
+        dispatch(fetchUser(searchedUserId));
+    };
+
+    const handleCreateUserModal = () => {
+        setIsCreateModalOpen(true);
+    };
+
+    const handleCreateUserSubmit = (e) => {
+        e.preventDefault();
+        dispatch(createUser(formData))
+        setFormData({
+            name: '',
+            description: '',
+            vehicle: ''
+        });
     };
 
     return (
         <div>
-            <div> Search User - Search Bar</div>
+            <form className="mock-search-container" onSubmit={handleSearchSubmit}>
+                <input className="mock-search-input" placeholder='Enter ID' value={searchedUserId || ""} onChange={handleInputChange} />
+                <button className="mock-search-submit-button" type="submit">
+                    <img src={searchIcon} alt="Search" width={18} height={18} />
+                </button>
+            </form>
             <div className="explore-user-list-container">
                 <div>
                     <h2>Mock API CRUD Operations</h2>
@@ -102,34 +114,16 @@ export const MockApiOperationsPage = () => {
                     <p>Loading...</p>
                 ) : error ? (
                     <p>Error: {error}</p>
-                ) : (
+                ) : users.length > 1 ? (
                     <>
                         <div className="explore-user-list-wrapper">
                             {currentUsers.map((user) => (
-                                <div className="explore-user-list-cards" key={user.id}>
-                                    <div className="user-list-image">
-                                        <img src={user.avatar} alt={user.name} />
-                                    </div>
-                                    <div className="mock-user-list-text">
-                                        <div className="user-list-info-wrapper">
-                                            <div className="user-list-name-desc">
-                                                <div className="user-list-name">
-                                                    <p>{user.name}</p>
-                                                </div>
-                                                <div className="user-list-description">
-                                                    <p>{user.description.length > 70 ? `${user.description.substring(0, 50)}...` : user.description}</p>
-                                                </div>
-                                            </div>
-                                            <div className="user-list-vehicle">
-                                                <p>{user.vehicle}</p>
-                                            </div>
-                                        </div>
-                                        <div className="user-list-action">
-                                            <button onClick={() => handleUpdateUser(user)}>Update</button>
-                                            <button onClick={() => handleDeleteUser(user)}>Delete</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <UserCard
+                                    key={user.id}
+                                    user={user}
+                                    onUpdateUser={handleUpdateUser}
+                                    onDeleteUser={handleDeleteUser}
+                                />
                             ))}
                         </div>
                         <div className="explore-users-pagination-wrapper">
@@ -138,8 +132,17 @@ export const MockApiOperationsPage = () => {
                             <button onClick={() => paginate(currentPage + 1)}>Next&nbsp;&nbsp;&gt;</button>
                         </div>
                     </>
+                ) : (
+                    <UserCard
+                        key={users.id}
+                        user={users}
+                        onUpdateUser={handleUpdateUser}
+                        onDeleteUser={handleDeleteUser}
+                    />
                 )}
             </div>
+
+            <div className="add-user-prompt" onClick={handleCreateUserModal}><p>Click to add user</p></div>
 
             <ReactModal className="edit-users-modal" isOpen={isEditModalOpen}>
                 <div className="edit-users-container">
@@ -177,6 +180,29 @@ export const MockApiOperationsPage = () => {
                     </div>
                 </div>
             </ReactModal>
-        </div>
+
+            <ReactModal className="edit-users-modal" isOpen={isCreateModalOpen}>
+                <div className="edit-users-container">
+                    <form className="edit-users-form" onSubmit={handleCreateUserSubmit}>
+                        <div className="edit-user-input">
+                            <label>Name:</label>
+                            <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} />
+                        </div>
+                        <div className="edit-user-input">
+                            <label>Description:</label>
+                            <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} />
+                        </div>
+                        <div className="edit-user-input">
+                            <label>Vehicle:</label>
+                            <input type="text" name="vehicle" placeholder="Vehicle" value={formData.vehicle} onChange={handleChange} />
+                        </div>
+                        <div className="edit-user-submit-btn">
+                            <button type="submit">Submit</button>
+                        </div>
+                    </form>
+                    <button className="edit-users-modal-close" onClick={() => setIsCreateModalOpen(false)}>Close</button>
+                </div>
+            </ReactModal>
+        </div >
     );
 };
