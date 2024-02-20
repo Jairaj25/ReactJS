@@ -120,6 +120,7 @@ nav div.active::after {
     transform: scale(0.7) translateX(60%) translateY(-5%);
     transform-origin: right center;
     transition: transform 0.5s linear;
+    animation: changeHeight2 0.5s forwards;
     position: relative;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 5;
@@ -131,25 +132,36 @@ nav div.active::after {
 #root {
     transition: transform 0.5s linear;
     transform-origin: right center;
-    animation: changeHeight 0.5s forwards;
+    animation: changeHeight 5s forwards;
+    overflow: auto;
     z-index: 5;
 }
 
+@keyframes changeHeight2 {
+    
+    from {
+        min-height: auto;
+    }
+    to {
+        min-height: 1025px;
+    }
+  }
+
   @keyframes changeHeight {
     0% {
-        height: auto;
-    }
-    99% {
-        height: 1025px;
+        min-height: 1025px;
     }
     100% {
-        height: auto;
+        min-height: auto;
     }
   }
 
 .mobile-nav-overlay.modal-open+#root {
-    transition: margin 0.5s linear;
+    transition: transform 0.5s linear;
+    transform-origin: right center;
     margin: 80%;
+    transform-origin: right center;
+    animation: changeHeight 0.5s forwards;
 }
 
 @media (max-width: 768px) {

@@ -199,7 +199,7 @@ input.explore-banner-find-address-input {
 
     .explore-food-list-wrapper {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        grid-template-columns: 1fr;
         gap: 20px;
     }
 
