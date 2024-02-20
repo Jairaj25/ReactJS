@@ -1,12 +1,11 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import ReactModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers, updateCurrentPage, fetchUser, createUser, updateUser, deleteUser } from '../../redux/actions/mock-api-action';
 import searchIcon from "../../assets/search-icon.svg";
 import "./index.css";
 import { UserCard } from '../../components/user-list-cards';
-
 export const MockApiOperationsPage = () => {
     const dispatch = useDispatch();
     const { loading, users, error, currentPage, usersPerPage } = useSelector((state) => state.mockApi);
@@ -22,7 +21,7 @@ export const MockApiOperationsPage = () => {
     });
 
     useEffect(() => {
-        dispatch(fetchUsers());
+            dispatch(fetchUsers());
     }, [dispatch]);
 
     const indexOfLastUser = currentPage * usersPerPage;

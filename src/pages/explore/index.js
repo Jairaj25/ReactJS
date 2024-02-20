@@ -106,7 +106,7 @@ export const ExplorePage = () => {
                     </>
                 )}
                 <div>
-                    <h3><Link to="/about">Click to perform CRUD Operations</Link></h3>
+                    <h3><Link to="/users">Click to perform CRUD Operations</Link></h3>
                 </div>
             </div>
         </div>
