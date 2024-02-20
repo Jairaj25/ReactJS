@@ -39,48 +39,16 @@ const mockApiReducer = (state = initialState, action) => {
         loading: true,
       };
 
-    //Success for fetching all users
+    //Success
     case FETCH_USERS_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        users: action.payload,
-        error: '',
-      };
-
-    //Success for fetching user by ID
     case FETCH_USER_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        user: action.payload,
-        error: '',
-      };
-
-    //Success for creating user
     case CREATE_USER_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        user: action.payload,
-        error: '',
-      };
-
-    //Success for updating user
     case UPDATE_USER_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        user: action.payload,
-        error: '',
-      };
-
-    //Success for deleting user by ID
     case DELETE_USER_SUCCESS:
       return {
         ...state,
         loading: false,
-        user: null,
+        users: action.payload,
         error: '',
       };
 

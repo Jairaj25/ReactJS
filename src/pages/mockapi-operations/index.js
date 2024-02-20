@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers, updateCurrentPage, fetchUser, createUser, updateUser, deleteUser } from '../../redux/actions/mock-api-action';
@@ -21,12 +21,16 @@ export const MockApiOperationsPage = () => {
     });
 
     useEffect(() => {
-            dispatch(fetchUsers());
+        dispatch(fetchUsers());
     }, [dispatch]);
 
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
-    const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+    var currentUsers = users;
+
+    if (Array.isArray(users)) {
+        currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+    }
 
     const paginate = (pageNumber) => {
         if (pageNumber >= 1 && pageNumber <= Math.ceil(users.length / usersPerPage)) {
@@ -52,7 +56,6 @@ export const MockApiOperationsPage = () => {
     const handleConfirmDelete = () => {
         dispatch(deleteUser(selectedUser.id));
         setIsDeleteModalOpen(false);
-        dispatch(fetchUsers());
     };
 
     const handleChange = (e) => {
@@ -113,7 +116,7 @@ export const MockApiOperationsPage = () => {
                     <p>Loading...</p>
                 ) : error ? (
                     <p>Error: {error}</p>
-                ) : users.length > 1 ? (
+                ) : Array.isArray(users) ? (
                     <>
                         <div className="explore-user-list-wrapper">
                             {currentUsers.map((user) => (

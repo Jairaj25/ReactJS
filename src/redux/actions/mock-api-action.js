@@ -37,7 +37,7 @@ export const fetchUsers = () => {
   };
 };
 
-// Update current page (custom function)
+// Update current page (custom function no API)
 export const updateCurrentPage = (pageNumber) => {
   return {
     type: UPDATE_CURRENT_PAGE,
