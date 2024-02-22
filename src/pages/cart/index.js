@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearCart, removeFromCart, updateQuantity } from '../../redux/reducers/cartreducer';
-import closeCircle from "../../assets/close-icon.svg"
+import closeCircle from "../../assets/close-icon.svg";
 import "./index.css";
 
 export const CartPage = ({ isPopUp }) => {
@@ -24,13 +24,18 @@ export const CartPage = ({ isPopUp }) => {
     dispatch(updateQuantity({ itemId, increment: true }));
   };
 
+  console.log('====================================');
+  console.log(cart.items);
+  console.log('====================================');
+
   return (
     <div className='cart-container'>
       <div className='cart-title'>
         <h2>Your Cart</h2>
       </div>
       <div className='cart-items'>
-        {cart.items.length > 1 ? (<div className='cart-card table-titles'>
+        {cart.items.length > 1 ? (
+        <div className='cart-card table-titles'>
           <p className='cart-card-name'>Name</p>
           <p className='cart-card-price'>Price</p>
           <div className='cart-quantity-action-wrapper'>
@@ -40,7 +45,14 @@ export const CartPage = ({ isPopUp }) => {
         </div>) : (null)}
         {cart.items.map(item => (
           <div className='cart-card' key={item.id}>
-            <p className='cart-card-name'>{item.foodName}</p>
+            <div className='cart-card-name'>
+              <div className='cart-card-name-image-container'>
+                <img className='cart-card-name-image' src={item.image} alt=''/>
+                <div className='cart-card-name-capsule'>
+                  <p>{item.foodName}</p>
+                </div>
+              </div>
+            </div>
             <p className='cart-card-price'>${item.price}</p>
             <div className='cart-quantity-action-wrapper'>
               <div className='cart-quantity-action'>

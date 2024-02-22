@@ -14,6 +14,7 @@ export const FoodListCards = ({ product, onAddToCart }) => {
             id: product.id,
             foodName,
             price: foodPrice,
+            image: image,
             quantity: 1,
             restaurant,
         };
