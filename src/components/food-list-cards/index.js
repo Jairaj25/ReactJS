@@ -25,7 +25,7 @@ export const FoodListCards = ({ product, onAddToCart }) => {
     const handleDecreaseQuantity = () => {
         if (quantity > 1) {
             setQuantity(prevQuantity => prevQuantity - 1);
-            dispatch(updateQuantity({ id, increment: false }));
+            dispatch(updateQuantity({ itemId: id, increment: false }));
         } else if (quantity === 1) {
             setQuantity(0);
             dispatch(removeFromCart(id));
@@ -35,7 +35,7 @@ export const FoodListCards = ({ product, onAddToCart }) => {
 
     const handleIncreaseQuantity = () => {
         setQuantity(quantity + 1);
-        dispatch(updateQuantity({ id, increment: true }));
+        dispatch(updateQuantity({ itemId: id, increment: true }));
     };
 
 

@@ -32,16 +32,24 @@ const cartSlice = createSlice({
     updateQuantity: (state, action) => {
       const { itemId, increment } = action.payload;
       const itemIndex = state.items.findIndex((item) => item.id === itemId);
+    
       if (itemIndex !== -1) {
-        if (increment === true) {
-          state.items[itemIndex].quantity += 1;
+        const updatedItems = [...state.items]; // Create a copy of the items array
+        const updatedItem = { ...updatedItems[itemIndex] }; // Create a copy of the item to update
+    
+        if (increment) {
+          updatedItem.quantity += 1;
         } else {
-          state.items[itemIndex].quantity -= 1;
-          if (state.items[itemIndex].quantity < 1) {
-            state.items.splice(itemIndex, 1);
+          updatedItem.quantity -= 1;
+          if (updatedItem.quantity < 1) {
+            updatedItems.splice(itemIndex, 1);
           }
         }
+    
+        updatedItems[itemIndex] = updatedItem; // Update the item in the copied array
+        state.items = updatedItems; // Update the state with the new array of items
       }
+    
       state.total = state.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
       saveCartToStorage(state);
     },

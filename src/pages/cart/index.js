@@ -24,10 +24,6 @@ export const CartPage = ({ isPopUp }) => {
     dispatch(updateQuantity({ itemId, increment: true }));
   };
 
-  console.log('====================================');
-  console.log(cart.items);
-  console.log('====================================');
-
   return (
     <div className='cart-container'>
       <div className='cart-title'>
@@ -73,14 +69,14 @@ export const CartPage = ({ isPopUp }) => {
       <div className='cart-actions'>
         <div className='cart-total-price-wrapper'>
           <p>Sub Total:</p>
-          <p className='cart-total-price'>${cart.total}</p>
+          <p className='cart-total-price'>${cart.total.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]}</p>
         </div>
         <div className='cart-restaurant-wrapper'>
           <p>Restaurant:</p>
           <p className='cart-restaurant'> {cart.items.length > 0 ? cart.restaurant : ""}</p>
         </div>
         <div className='clear-cart' onClick={handleClearToCart}>
-          Clear Cart
+          <p>Clear Cart</p>
         </div>
       </div>
     </div>

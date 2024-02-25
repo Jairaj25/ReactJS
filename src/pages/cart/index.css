@@ -4,7 +4,7 @@
     justify-content: center;
     padding: 0 5vw;
     gap: 75px;
-    margin: 50px 0 0 0;
+    margin: 50px 0 100px 0;
 }
 
 .cart-title{
@@ -21,12 +21,15 @@
 .table-titles{
     font-size: 18px;
     font-weight: 600;
+    border-bottom: none !important;
 }
 
 .cart-card{
     display: flex;
     gap: 50px;
     align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #1C2344;
 }
 
 .cart-card-name{
@@ -69,19 +72,18 @@
     width: 15vw;
 }
 
-.cart-quantity-action-wrapper{
-    width: 10vw;
-}
-
 .cart-quantity-action{
     width: fit-content;
     border: 1.5px solid #1C2344;
     border-radius: 10px;
+    display: flex;
+    gap: 30px;
+    align-items: center;
 }
 
 .cart-decrement-btn,
 .cart-increment-btn {
-    width: 1.5vw;
+    width: 1.7vw;
 }
 
 .cart-decrement-btn{
@@ -96,16 +98,23 @@
     height: 18px;
 }
 
+.clear-cart{
+    background: #F5C509;
+    color: #1C2344;
+    width: 150px;
+    height: 50px;
+    border-radius: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .total-action-wrapper{
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 85px;
-}
-
-.cart-quantity-action{
-    display: flex;
-    gap: 30px;
 }
 
 .cart-actions{
