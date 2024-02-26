@@ -119,7 +119,7 @@ export const MockApiOperationsPage = () => {
                     <img src={searchIcon} alt="Search" width={18} height={18} />
                 </button>
             </form>
-            <div className="explore-user-list-container">
+            <div className="explore-user-list-container" id="test">
                 <div>
                     <h2>Mock API CRUD Operations</h2>
                 </div>
@@ -141,11 +141,11 @@ export const MockApiOperationsPage = () => {
                             ))}
                         </div>
                         <div className="explore-users-pagination-wrapper">
-                            <button onClick={() => paginate(1)}>&lt;&lt;</button>
-                            <button className={currentPage === 1 ? ("disable-btn") : ("")} onClick={() => paginate(currentPage - 1)}>&lt;&nbsp;&nbsp;Previous</button>
+                            <button className={currentPage === 1 ? ("disable-btn") : ("")} onClick={() => paginate(1)}><a href="#test">&lt;&lt;</a></button>
+                            <button className={currentPage === 1 ? ("disable-btn") : ("")} onClick={() => paginate(currentPage - 1)}><a href="#test">&lt;&nbsp;&nbsp;Previous</a></button>
                             <div className='pagination-current-page'><p>{currentPage}</p></div>
-                            <button className={currentPage.toString() === lastPage ? ("disable-btn") : ("")} onClick={() => paginate(currentPage + 1)}>Next&nbsp;&nbsp;&gt;</button>
-                            <button onClick={() => paginate(lastPage)}>&gt;&gt;</button>
+                            <button className={currentPage.toString() === lastPage ? ("disable-btn") : ("")} onClick={() => paginate(currentPage + 1)}><a href="#test">Next&nbsp;&nbsp;&gt;</a></button>
+                            <button className={currentPage.toString() === lastPage ? ("disable-btn") : ("")} onClick={() => paginate(lastPage)}><a href="#test">&gt;&gt;</a></button>
                         </div>
                     </>
                 ) : (

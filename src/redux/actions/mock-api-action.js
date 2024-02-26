@@ -17,7 +17,6 @@ export const fetchUser = createAsyncThunk('mockApi/fetchUser', async (userId) =>
 
 // Create user
 export const createUser = createAsyncThunk('mockApi/createUser', async (userData) => {
-  console.log("userData", userData);
   const response = await axios.post(baseUrl, userData);
   return response.data;
 });
@@ -83,7 +82,6 @@ export const mockApiSlice = createSlice({
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("action.payload)", action.payload);
         state.users.push(action.payload);
         state.error = '';
       })

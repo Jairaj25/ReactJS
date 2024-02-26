@@ -17,7 +17,7 @@ export const ExplorePage = () => {
 
     const temp = useSelector((state) => state.mockApi);
     console.log(temp);
-    
+
     useEffect(() => {
         dispatch(fetchProducts());
         dispatch(fetchUsers());
@@ -113,9 +113,11 @@ export const ExplorePage = () => {
                             ))}
                         </div>
                         <div className="explore-users-pagination-wrapper">
-                            <button className={currentPage === 1 ? ("disable-btn") : ("")} onClick={() => paginate(currentPage - 1)}>&lt;&nbsp;&nbsp;Previous</button>
+                            <button className={currentPage === 1 ? ("disable-btn") : ("")} onClick={() => paginate(1)}><a href="#test">&lt;&lt;</a></button>
+                            <button className={currentPage === 1 ? ("disable-btn") : ("")} onClick={() => paginate(currentPage - 1)}><a href="#test">&lt;&nbsp;&nbsp;Previous</a></button>
                             <div className='pagination-current-page'><p>{currentPage}</p></div>
-                            <button className={currentPage.toString() === lastPage ? ("disable-btn") : ("")} onClick={() => paginate(currentPage + 1)}>Next&nbsp;&nbsp;&gt;</button>
+                            <button className={currentPage.toString() === lastPage ? ("disable-btn") : ("")} onClick={() => paginate(currentPage + 1)}><a href="#test">Next&nbsp;&nbsp;&gt;</a></button>
+                            <button className={currentPage.toString() === lastPage ? ("disable-btn") : ("")} onClick={() => paginate(lastPage)}><a href="#test">&gt;&gt;</a></button>
                         </div>
                     </>
                 )}
