@@ -1,98 +1,126 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-
-export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
-export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
-export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
-
-export const UPDATE_CURRENT_PAGE = 'UPDATE_CURRENT_PAGE';
-
-export const FETCH_USER_REQUEST = 'FETCH_USER_REQUEST';
-export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
-export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
-
-export const CREATE_USER_REQUEST = 'CREATE_USER_REQUEST';
-export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
-export const CREATE_USER_FAILURE = 'CREATE_USER_FAILURE';
-
-export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
-export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
-export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
-
-export const DELETE_USER_REQUEST = 'DELETE_USER_REQUEST';
-export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
-export const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 
 const baseUrl = "https://65c5339adae2304e92e40df5.mockapi.io/mockapi/v1/Users";
 
 // Fetch all users
-export const fetchUsers = () => {
-  return async (dispatch) => {
-    dispatch({ type: FETCH_USERS_REQUEST });
-    try {
-      const response = await axios.get(baseUrl);
-      dispatch({ type: FETCH_USERS_SUCCESS, payload: response.data });
-    } catch (error) {
-      dispatch({ type: FETCH_USERS_FAILURE, payload: error.message });
-    }
-  };
-};
-
-// Update current page (custom function no API)
-export const updateCurrentPage = (pageNumber) => {
-  return {
-    type: UPDATE_CURRENT_PAGE,
-    payload: pageNumber,
-  };
-};
+export const fetchUsers = createAsyncThunk('mockApi/fetchUsers', async () => {
+  const response = await axios.get(baseUrl);
+  return response.data;
+});
 
 // Fetch user by ID
-export const fetchUser = (userId) => {
-  return async (dispatch) => {
-    dispatch({ type: FETCH_USER_REQUEST });
-    try {
-      const response = await axios.get(`${baseUrl}/${userId}`);
-      dispatch({ type: FETCH_USER_SUCCESS, payload: response.data });
-    } catch (error) {
-      dispatch({ type: FETCH_USER_FAILURE, payload: error.message });
-    }
-  };
-};
+export const fetchUser = createAsyncThunk('mockApi/fetchUser', async (userId) => {
+  const response = await axios.get(`${baseUrl}/${userId}`);
+  return response.data;
+});
 
 // Create user
-export const createUser = (userData) => {
-  return async (dispatch) => {
-    dispatch({ type: CREATE_USER_REQUEST });
-    try {
-      const response = await axios.post(baseUrl, userData);
-      dispatch({ type: CREATE_USER_SUCCESS, payload: response.data });
-    } catch (error) {
-      dispatch({ type: CREATE_USER_FAILURE, payload: error.message });
-    }
-  };
+export const createUser = createAsyncThunk('mockApi/createUser', async (userData) => {
+  console.log("userData", userData);
+  const response = await axios.post(baseUrl, userData);
+  return response.data;
+});
+
+// Update user
+export const updateUser = createAsyncThunk('mockApi/updateUser', async ({ userId, userData }) => {
+  const response = await axios.put(`${baseUrl}/${userId}`, userData);
+  return response.data;
+});
+
+// Delete user
+export const deleteUser = createAsyncThunk('mockApi/deleteUser', async (userId) => {
+  await axios.delete(`${baseUrl}/${userId}`);
+  return userId;
+});
+
+const initialState = {
+  loading: false,
+  users: [],
+  error: '',
+  currentPage: 1,
+  usersPerPage: 6,
 };
 
-// Update user by ID
-export const updateUser = (userId, userData) => {
-  return async (dispatch) => {
-    dispatch({ type: UPDATE_USER_REQUEST });
-    try {
-      const response = await axios.put(`${baseUrl}/${userId}`, userData);
-      dispatch({ type: UPDATE_USER_SUCCESS, payload: response.data });
-    } catch (error) {
-      dispatch({ type: UPDATE_USER_FAILURE, payload: error.message });
-    }
-  };
-};
+export const mockApiSlice = createSlice({
+  name: 'mockApi',
+  initialState,
+  reducers: {
+    updateCurrentPage(state, action) {
+      state.currentPage = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUsers.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.users = action.payload;
+        state.error = '';
+      })
+      .addCase(fetchUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.users = [];
+        state.error = action.error.message;
+      })
+      .addCase(fetchUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.users = [action.payload];
+        state.error = '';
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.loading = false;
+        state.users = [];
+        state.error = action.error.message;
+      })
+      .addCase(createUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log("action.payload)", action.payload);
+        state.users.push(action.payload);
+        state.error = '';
+      })
+      .addCase(createUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        const updatedUserIndex = state.users.findIndex(user => user.id === action.payload.id);
+        if (updatedUserIndex !== -1) {
+          state.users[updatedUserIndex] = action.payload;
+        }
+        state.error = '';
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(deleteUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.users = state.users.filter(user => user.id !== action.payload);
+        state.error = '';
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+  },
+});
 
-// Delete user by ID
-export const deleteUser = (userId) => {
-  return async (dispatch) => {
-    dispatch({ type: DELETE_USER_REQUEST });
-    try {
-      await axios.delete(`${baseUrl}/${userId}`);
-      dispatch({ type: DELETE_USER_SUCCESS, payload: userId });
-    } catch (error) {
-      dispatch({ type: DELETE_USER_FAILURE, payload: error.message });
-    }
-  };
-};
+export const { updateCurrentPage } = mockApiSlice.actions;
+
+export default mockApiSlice.reducer;

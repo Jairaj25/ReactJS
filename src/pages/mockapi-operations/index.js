@@ -79,7 +79,7 @@ export const MockApiOperationsPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(updateUser(selectedUser.id, formData))
+        dispatch(updateUser({ userId: selectedUser.id, userData: formData }))
         setFormData({
             name: '',
             description: '',
@@ -94,7 +94,7 @@ export const MockApiOperationsPage = () => {
 
     const handleSearchSubmit = (event) => {
         event.preventDefault();
-        dispatch(fetchUser(searchedUserId));
+        dispatch(fetchUser({userId: searchedUserId}));
     };
 
     const handleCreateUserModal = () => {
@@ -141,9 +141,11 @@ export const MockApiOperationsPage = () => {
                             ))}
                         </div>
                         <div className="explore-users-pagination-wrapper">
+                            <button onClick={() => paginate(1)}>&lt;&lt;</button>
                             <button className={currentPage === 1 ? ("disable-btn") : ("")} onClick={() => paginate(currentPage - 1)}>&lt;&nbsp;&nbsp;Previous</button>
                             <div className='pagination-current-page'><p>{currentPage}</p></div>
                             <button className={currentPage.toString() === lastPage ? ("disable-btn") : ("")} onClick={() => paginate(currentPage + 1)}>Next&nbsp;&nbsp;&gt;</button>
+                            <button onClick={() => paginate(lastPage)}>&gt;&gt;</button>
                         </div>
                     </>
                 ) : (

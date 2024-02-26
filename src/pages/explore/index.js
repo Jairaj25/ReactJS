@@ -15,6 +15,9 @@ export const ExplorePage = () => {
     const products = useSelector(state => state.products);
     const { loading, users, error, currentPage, usersPerPage } = useSelector((state) => state.mockApi);
 
+    const temp = useSelector((state) => state.mockApi);
+    console.log(temp);
+    
     useEffect(() => {
         dispatch(fetchProducts());
         dispatch(fetchUsers());
