@@ -27,11 +27,21 @@ export const ExplorePage = () => {
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
     const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+    const totalUsers = users.length;
+    const lastPage = (totalUsers / usersPerPage).toFixed(0);
 
     const paginate = (pageNumber) => {
-        if (pageNumber >= 1 && pageNumber <= Math.ceil(users.length / usersPerPage)) {
+        if (pageNumber >= 1 && pageNumber <= Math.ceil(totalUsers / usersPerPage)) {
             dispatch(updateCurrentPage(pageNumber));
         }
+    };
+    const renderUserRange = () => {
+        const indexOfLastUser = currentPage * usersPerPage;
+        const indexOfFirstUser = indexOfLastUser - usersPerPage;
+        const upperBound = Math.min(indexOfLastUser, totalUsers);
+        const lowerBound = Math.min(indexOfFirstUser + 1, totalUsers);
+
+        return `Showing ${lowerBound}-${upperBound} out of ${totalUsers}`;
     };
 
     return (
@@ -76,6 +86,7 @@ export const ExplorePage = () => {
                     <p>Error: {error}</p>
                 ) : (
                     <>
+                        <div className='alignself-baseline'><p>{renderUserRange()}</p></div>
                         <div className="explore-user-list-wrapper">
                             {currentUsers.map((user) => (
                                 <div className="explore-user-list-cards" key={user.id}>
@@ -99,9 +110,9 @@ export const ExplorePage = () => {
                             ))}
                         </div>
                         <div className="explore-users-pagination-wrapper">
-                            <button onClick={() => paginate(currentPage - 1)}>&lt;&nbsp;&nbsp;Previous</button>
-                            <div>{currentPage}</div>
-                            <button onClick={() => paginate(currentPage + 1)}>Next&nbsp;&nbsp;&gt;</button>
+                            <button className={currentPage === 1 ? ("disable-btn") : ("")} onClick={() => paginate(currentPage - 1)}>&lt;&nbsp;&nbsp;Previous</button>
+                            <div className='pagination-current-page'><p>{currentPage}</p></div>
+                            <button className={currentPage.toString() === lastPage ? ("disable-btn") : ("")} onClick={() => paginate(currentPage + 1)}>Next&nbsp;&nbsp;&gt;</button>
                         </div>
                     </>
                 )}

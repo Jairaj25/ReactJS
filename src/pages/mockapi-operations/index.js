@@ -26,14 +26,25 @@ export const MockApiOperationsPage = () => {
 
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const totalUsers = users.length;
+    const lastPage = (totalUsers / usersPerPage).toFixed(0);
     var currentUsers = users;
+
+    const renderUserRange = () => {
+        const indexOfLastUser = currentPage * usersPerPage;
+        const indexOfFirstUser = indexOfLastUser - usersPerPage;
+        const upperBound = Math.min(indexOfLastUser, totalUsers);
+        const lowerBound = Math.min(indexOfFirstUser + 1, totalUsers);
+
+        return `Showing ${lowerBound}-${upperBound} out of ${totalUsers}`;
+    };
 
     if (Array.isArray(users)) {
         currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
     }
 
     const paginate = (pageNumber) => {
-        if (pageNumber >= 1 && pageNumber <= Math.ceil(users.length / usersPerPage)) {
+        if (pageNumber >= 1 && pageNumber <= Math.ceil(totalUsers / usersPerPage)) {
             dispatch(updateCurrentPage(pageNumber));
         }
     };
@@ -118,6 +129,7 @@ export const MockApiOperationsPage = () => {
                     <p>Error: {error}</p>
                 ) : Array.isArray(users) ? (
                     <>
+                        <div className='alignself-baseline'><p>{renderUserRange()}</p></div>
                         <div className="explore-user-list-wrapper">
                             {currentUsers.map((user) => (
                                 <UserCard
@@ -129,18 +141,22 @@ export const MockApiOperationsPage = () => {
                             ))}
                         </div>
                         <div className="explore-users-pagination-wrapper">
-                            <button onClick={() => paginate(currentPage - 1)}>&lt;&nbsp;&nbsp;Previous</button>
-                            <div>{currentPage}</div>
-                            <button onClick={() => paginate(currentPage + 1)}>Next&nbsp;&nbsp;&gt;</button>
+                            <button className={currentPage === 1 ? ("disable-btn") : ("")} onClick={() => paginate(currentPage - 1)}>&lt;&nbsp;&nbsp;Previous</button>
+                            <div className='pagination-current-page'><p>{currentPage}</p></div>
+                            <button className={currentPage.toString() === lastPage ? ("disable-btn") : ("")} onClick={() => paginate(currentPage + 1)}>Next&nbsp;&nbsp;&gt;</button>
                         </div>
                     </>
                 ) : (
-                    <UserCard
-                        key={users.id}
-                        user={users}
-                        onUpdateUser={handleUpdateUser}
-                        onDeleteUser={handleDeleteUser}
-                    />
+                    <>
+                        <UserCard
+                            key={users.id}
+                            user={users}
+                            onUpdateUser={handleUpdateUser}
+                            onDeleteUser={handleDeleteUser}
+                        />
+
+                        <p className='pointer-cursor' onClick={() => { dispatch(fetchUsers()); }}>Click to show all</p>
+                    </>
                 )}
             </div>
 
@@ -165,7 +181,14 @@ export const MockApiOperationsPage = () => {
                             <button type="submit">Submit</button>
                         </div>
                     </form>
-                    <button className="edit-users-modal-close" onClick={() => setIsEditModalOpen(false)}>Close</button>
+                    <button className="edit-users-modal-close" onClick={() => {
+                        setIsEditModalOpen(false);
+                        setFormData({
+                            name: '',
+                            description: '',
+                            vehicle: ''
+                        })
+                    }}>Close</button>
                 </div>
             </ReactModal>
 
@@ -202,9 +225,16 @@ export const MockApiOperationsPage = () => {
                             <button type="submit">Submit</button>
                         </div>
                     </form>
-                    <button className="edit-users-modal-close" onClick={() => setIsCreateModalOpen(false)}>Close</button>
+                    <button className="edit-users-modal-close" onClick={() => {
+                        setIsCreateModalOpen(false);
+                        setFormData({
+                            name: '',
+                            description: '',
+                            vehicle: ''
+                        })
+                    }}>Close</button>
                 </div>
-            </ReactModal>
+            </ReactModal >
         </div >
     );
 };
